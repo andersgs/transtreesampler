@@ -20,6 +20,8 @@ Imports:
     furrr,
     ape,
     future,
-    outbreaker2
+    outbreaker2,
+    tidyr,
+    stringr
 Remotes: 
      reconhub/outbreaker2@afe602b170
