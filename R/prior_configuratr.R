@@ -31,8 +31,8 @@ prior_configuratr <- function(...) {
     pb = TRUE
   )
   args <- list(...)
-  for (arg in names(args)){
-    if(exists(arg, where=config_params) {
+  for (arg in names(args)) {
+    if(exists(arg, where=config_params)) {
       config_params[[arg]] <- args[[arg]]
     }
   }
