@@ -17,7 +17,7 @@
 #'
 #' @examples
 get_generation_internal_dens <- function(mu, stdev, len=20) {
-  x <- seq(0, len)
+  x <- seq(1, len)
   dens <- EpiEstim::discr_si(x, mu = mu, sigma = stdev)
   return(list(
     w_dens = dens,
