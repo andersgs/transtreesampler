@@ -11,6 +11,7 @@ tidy_outb2 <- function(mcmc) {
   data_tbl <- tibble::as_tibble(res_lst) %>%
     tidyr::pivot_longer(cols=contains("_"),
                         names_to = c(".value", 'sample_index'),
-                        names_pattern = "(.*)_(.*)")
+                        names_pattern = "(.*)_(.*)") %>%
+    dplyr::mutate(sample_index = as.integer(sample_index))
   return(data_tbl)
 }
