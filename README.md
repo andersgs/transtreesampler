@@ -51,7 +51,7 @@ this). This will run a very short MCMC chain (50 iterations sampled every 1 iter
  this is not sufficient for any analyses, just to test that things are working):
 
 ```bash
-nextflow run main.nf --fasta /full/path/to/fasta.fa --metadata /full/path/to/metadata.csv
+nextflow run andersgs/transtreesampler --fasta /full/path/to/fasta.fa --metadata /full/path/to/metadata.csv
 ```
 
 The metadata file must have the following columns and data, and must be in CSV
@@ -86,7 +86,7 @@ That is ok, you can change that by using the following options (change only thos
 that apply):
 
 ```bash
-nextflow run main.nf --fasta /full/path/to/fasta.fa \
+nextflow run andersgs/transtreesampler --fasta /full/path/to/fasta.fa \
                      --metadata /full/path/to/metadata.csv \
                      --cluster_col <my_cluster_id> \
                      --sample_id_col <my_sample_id> \
@@ -100,7 +100,7 @@ To change the minimum size of clusters to be analyzed (default 15), you need to
 specify the `--min_cluster_size` flag:
 
 ```bash
-nextflow run main.nf --fasta /full/path/to/fasta.fa \
+nextflow run andersgs/transtreesampler --fasta /full/path/to/fasta.fa \
                      --metadata /full/path/to/metadata.csv \
                      --min_cluster_size 20
 ```
@@ -111,7 +111,7 @@ To run a proper length MCMC, you need to specify two options that set the
 length of the MCMC and the thinning (how frequently samples are kept):
 
 ```bash
-nextflow run main.nf --fasta /full/path/to/fasta.fa \
+nextflow run andersgs/transtreesampler --fasta /full/path/to/fasta.fa \
                      --metadata /full/path/to/metadata.csv \
                      --n_iter 100000 \
                      --sample_every 100
@@ -149,6 +149,16 @@ project directory. Each step of the workflow will store its outputs in a
 * `cluster_output` sub-folder groups data from different conditions from the same
   cluster into a single data.frame, and outputs it as a CSV file. Here, some
   column names are changed to match requirements for downstream analyses.
+  
+  
+## Authors
+
+* Kurnia Susvitasari
+* Jessica Stockdale
+* Ben Sobkowiak
+* Anders Goncalves da Silva
+* Paul Tupper
+* Caroline Colijn
 
 
 
