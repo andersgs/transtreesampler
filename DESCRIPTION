@@ -22,6 +22,7 @@ Imports:
     future,
     outbreaker2,
     tidyr,
-    stringr
+    stringr,
+    tictoc
 Remotes: 
      reconhub/outbreaker2@afe602b170
