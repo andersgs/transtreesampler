@@ -166,6 +166,9 @@ process run_mcmc {
 
   publishDir "results/mcmc"
   cpus 1
+  errorStrategy "retry"
+  maxRetries 3
+
 
   input:
     path rdata
