@@ -191,7 +191,8 @@ process run_mcmc {
   dplyr::mutate(this_config = list(transtreesampler::prior_configuratr(n_iter = $params.n_iter,
                                                                        sample_every = $params.sample_every,
                                                                        prior_mu = $params.prior_mu,
-                                                                       sd_mu = $params.sd_mu))) %>%
+                                                                       sd_mu = $params.sd_mu,
+                                                                       paranoid = $params.paranoid))) %>%
   dplyr::mutate(ttr = purrr:::pmap(.l=list(this_config, this_likelihood, this_data),
                                   .f=transtreesampler::sample_trees))
   new_name = stringr::str_replace(string = "$rdata", pattern=".Rdata", replacement="_mcmc.Rdata")
