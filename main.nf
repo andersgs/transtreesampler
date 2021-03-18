@@ -177,7 +177,7 @@ process run_mcmc {
     path "*_mcmc.Rdata", emit: rdata
 
   script:
-  def paranoid = $params.paranoid ? "TRUE" : "FALSE"
+  def paranoid = params.paranoid ? "TRUE" : "FALSE"
   """
   #!/usr/bin/env Rscript
   # load libraries
