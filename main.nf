@@ -177,7 +177,7 @@ process run_mcmc {
     path "*_mcmc.Rdata", emit: rdata
 
   script:
-
+  def paranoid = $params.paranoid ? "TRUE" : "FALSE"
   """
   #!/usr/bin/env Rscript
   # load libraries
@@ -195,7 +195,7 @@ process run_mcmc {
                                                                        sample_every = $params.sample_every,
                                                                        prior_mu = $params.prior_mu,
                                                                        sd_mu = $params.sd_mu,
-                                                                       paranoid = $params.paranoid))) %>%
+                                                                       paranoid =$paranoid))) %>%
   dplyr::mutate(ttr = purrr:::pmap(.l=list(this_config, this_likelihood, this_data),
                                   .f=transtreesampler::sample_trees))
   new_name = stringr::str_replace(string = "$rdata", pattern=".Rdata", replacement="_mcmc.Rdata")
