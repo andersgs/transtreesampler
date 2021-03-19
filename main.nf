@@ -2,6 +2,8 @@
 
 nextflow.enable.dsl=2
 
+Random rnd = new Random()
+
 /*
 conditions <- list(
   set1 = list(mu = 5.2, stdev = 1.72),
@@ -169,7 +171,6 @@ process run_mcmc {
   errorStrategy "retry"
   maxRetries 3
 
-
   input:
     path rdata
 
@@ -178,6 +179,7 @@ process run_mcmc {
 
   script:
   def paranoid = params.paranoid ? "TRUE" : "FALSE"
+  def seed = rnd.nextInt(10000)
   """
   #!/usr/bin/env Rscript
   # load libraries
@@ -197,7 +199,7 @@ process run_mcmc {
                                                                        sd_mu = $params.sd_mu,
                                                                        paranoid =$paranoid))) %>%
   dplyr::mutate(ttr = purrr:::pmap(.l=list(this_config, this_likelihood, this_data),
-                                  .f=transtreesampler::sample_trees))
+                                  .f=transtreesampler::sample_trees, seed=$seed))
   new_name = stringr::str_replace(string = "$rdata", pattern=".Rdata", replacement="_mcmc.Rdata")
   saveRDS(mcmc, new_name)
   """
