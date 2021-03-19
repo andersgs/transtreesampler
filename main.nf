@@ -65,7 +65,7 @@ process prep_data {
   dplyr::mutate(data = purrr::map(.x = data,
                                   .f = ~ .x %>%
                                     dplyr::mutate(sample_index = 1:nrow(.)) %>%
-                                    dplyr::slice(1:6) %>%
+                                    #dplyr::slice(1:6) %>%
                                     dplyr::mutate(onset_date_days = as.integer(!!onset_date_col - min(!!sampling_date_col))))) %>%
   # get the sample ids
   dplyr::mutate(sample_ids = purrr::map(.x = data,
