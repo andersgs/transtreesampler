@@ -25,4 +25,4 @@ Imports:
     stringr,
     tictoc
 Remotes: 
-     reconhub/outbreaker2@afe602b170
+     andersgs/outbreaker2@pass_index_custom_lh
