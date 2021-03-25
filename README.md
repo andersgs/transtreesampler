@@ -105,6 +105,35 @@ nextflow run andersgs/transtreesampler --fasta /full/path/to/fasta.fa \
                      --min_cluster_size 20
 ```
 
+
+### I only want to run a single cluster
+
+If you have metadata with several clusters, but you only want to run a single
+one of them through tree sampling process, you can use the `--filter_cluster_id`
+option to select the cluster of interest. In the code below, we restrict the 
+analysis only to the cluster identified as `67`:
+
+```bash
+nextflow run andersgs/transtreesampler --fasta /full/path/to/fasta.fa \
+                     --metadata /full/path/to/metadata.csv \
+                     --filter_cluster_id 67
+```
+
+### I want to run fewer samples per cluster as a test run
+
+Let say you want to run some quick tests, and don't want to run a full set of 
+samples in your clusters. To restrict the number of samples included in the 
+analysis, you can use the `--max_samples` option. Below, we restrict our 
+analysis to the first 6 samples in each cluster:
+
+**NOTE**: This option really should only be used for testing.
+
+```bash
+nextflow run andersgs/transtreesampler --fasta /full/path/to/fasta.fa \
+                     --metadata /full/path/to/metadata.csv \
+                     --max_samples 6
+```
+
 ### Test run worked, now how do I run a proper length MCMC
 
 To run a proper length MCMC, you need to specify two options that set the 
