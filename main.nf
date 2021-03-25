@@ -42,6 +42,8 @@ process prep_data {
   sampling_date_col <- quote($params.sampling_date_col)
   onset_date_col <- quote($params.onset_date_col)
   min_cluster_size <- $params.min_cluster_size
+  filter_cluster <- $params.filter_cluster_id
+  max_samples <- if($params.max_samples == 0) NULL else $params.max_samples
 
   # load data
   aln <- phangorn::read.phyDat("$fasta", format="fasta")
@@ -49,24 +51,11 @@ process prep_data {
 
   # prepare the data for the likelihood and MCMC
   mdt_prep <- mdt %>%
-  # group the data by the cluster ID column
-  dplyr::group_by(!!cluster_col) %>%
-  # nest to make it easy to apply elements to each cluster
-  tidyr::nest() %>%
-  # calculate the number of samples per cluster
-  dplyr::mutate(size = purrr::map_int(.x = data, ~nrow(.x))) %>%
-  # arrange by size --- an aesthetic option
-  dplyr::arrange(desc(size)) %>%
-  # remove clusters that do not meet the minimum requirement
-  dplyr::filter(size >= min_cluster_size) %>%
-  # add a column for sample index and add an onset_date_days column
-  # to put the date of onset in the same unit as sampling days used by
-  # outbreaker2
-  dplyr::mutate(data = purrr::map(.x = data,
-                                  .f = ~ .x %>%
-                                    dplyr::mutate(sample_index = 1:nrow(.)) %>%
-                                    #dplyr::slice(1:6) %>%
-                                    dplyr::mutate(onset_date_days = as.integer(!!onset_date_col - min(!!sampling_date_col))))) %>%
+  transtreesampler::filter_clusters(filter_cluster, cluster_col, min_cluster_size) %>%
+  dplyr::mutate(data = purrr::map(.x = data, .f = ~transtreesampler::prep_cluster_data(.x,
+                                                                                       onset_date_col = onset_date_col,
+                                                                                       sampling_date_col = sampling_date_col,
+                                                                                       max_samples = max_samples)))%>%
   # get the sample ids
   dplyr::mutate(sample_ids = purrr::map(.x = data,
                                         ~dplyr::pull(.x,!!sample_id_col))) %>%
