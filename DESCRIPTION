@@ -23,6 +23,7 @@ Imports:
     outbreaker2,
     tidyr,
     stringr,
-    tictoc
+    tictoc,
+    broom
 Remotes: 
      andersgs/outbreaker2@pass_index_custom_lh
